@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Student Helper 🔍</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      padding: 2rem;
+      text-align: center;
+    }
+    input {
+      width: 60%;
+      padding: 10px;
+      font-size: 16px;
+      border: 2px solid #aaa;
+      border-radius: 5px;
+    }
+    #result {
+      margin-top: 2rem;
+      font-size: 18px;
+      white-space: pre-line;
+      background: #fff;
+      padding: 1rem;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+  </style>
+</head>
+<body>
+  <h1>🎓 Student Helper</h1>
+  <input id="searchBox" placeholder="Search for a topic (e.g., node js, internship tips)..." />
+  <div id="result"></div>
+
+  <script>
+    let data = {};
+
+    // Fetch data from backend
+    fetch('/api/data')
+      .then(res => res.json())
+      .then(json => { data = json; });
+
+    document.getElementById('searchBox').addEventListener('input', function () {
+      const input = this.value.toLowerCase().trim();
+      const resultBox = document.getElementById('result');
+      if (input in data) {
+        resultBox.textContent = data[input];
+      } else {
+        resultBox.textContent = '⚠️ No match found. Try a different keyword.';
+      }
+    });
+  </script>
+</body>
+</html>
